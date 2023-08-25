@@ -43,7 +43,7 @@ def get_acc_from_dict(dict, description):
         return dict.get(description)
     else:
         print(description, file=sys.stderr)
-        return ''
+        return 'NULL'
 
 
 def get_acc_list_from_line(dict, line):
