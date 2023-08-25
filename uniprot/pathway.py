@@ -81,7 +81,6 @@ def main():
                 m = re.match(r'^(\S+)\s+\((\S+)\)$', i)
                 if m:
                     [id1, id2] = m.groups()
-                    acc_list = get_acc_list_from_line(dict, description)
                     print(id1, id2, acc_list, description, sep='\t')
                 else:
                     print('ERROR: ' + i, file=sys.stderr)
@@ -91,6 +90,7 @@ def main():
             if ma:
                 description = ma.groups()[0]
                 description = description.lower()
+                acc_list = get_acc_list_from_line(dict, description)
             else:
                 print('ERROR: ' + line, file=sys.stderr)
                 sys.exit(1)
