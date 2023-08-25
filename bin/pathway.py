@@ -80,8 +80,8 @@ def main():
                 i = i.rstrip()
                 m = re.match(r'^(\S+)\s+\((\S+)\)$', i)
                 if m:
-                    [id1, id2] = m.groups()
-                    print(id1, id2, acc_list, description, sep='\t')
+                    [mnemonic, uniprot_id] = m.groups()
+                    print(uniprot_id, mnemonic, acc_list, description, sep='\t')
                 else:
                     print('ERROR: ' + i, file=sys.stderr)
                     sys.exit(1)
