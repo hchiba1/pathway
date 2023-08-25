@@ -47,13 +47,21 @@ def get_acc_from_dict(dict, description):
 
 
 def get_acc_list_from_line(dict, line):
+    m = re.match(r'^(.+) \[regulation\]$', line)
+    reg = ''
+    if m:
+        line = m.groups()[0]
+        reg = 'R'
     arr = line.split('; ')
     acc_list = []
     for i in arr:
         acc = get_acc_from_dict(dict, i)
         if acc != '':
             acc_list.append(acc)
-    return ";".join(acc_list)
+    ret = ";".join(acc_list)
+    if reg != '':
+        ret += ';' + reg
+    return ret
 
 
 def main():
