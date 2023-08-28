@@ -63,6 +63,7 @@ def get_acc_from_dict(description):
 
 
 def get_type_list_from_line(line):
+    line = line.lower()
     m = re.match(r'^(.+) \[regulation\]$', line)
     reg = ''
     if m:
@@ -81,6 +82,7 @@ def get_type_list_from_line(line):
 
 
 def get_acc_list_from_line(line):
+    line = line.lower()
     m = re.match(r'^(.+) \[regulation\]$', line)
     reg = ''
     if m:
@@ -132,7 +134,7 @@ def main():
             ma = re.match(r'^(\S.*)\.$', line)
             if ma:
                 description = ma.groups()[0]
-                description = description.lower()
+                # description = description.lower()
                 acc_list = get_acc_list_from_line(description)
                 type = get_type_list_from_line(description)
             else:
