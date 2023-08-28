@@ -34,7 +34,10 @@ def main():
             if m:
                 acc = m.groups()[0]
                 dict[descr] = acc
-                print(acc, descr, sep='\t')
+            m = re.match(r'^CL\s+(.*)\.$', line)
+            if m:
+                type = m.groups()[0]
+                print(acc, type, descr, sep='\t')
 
 
 if __name__ == '__main__':
