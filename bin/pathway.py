@@ -3,11 +3,6 @@ import argparse
 import sys
 import re
 
-parser = argparse.ArgumentParser(description='')
-parser.add_argument('-n', '--cores', type=int, default=1, help='')
-parser.add_argument('-v', '--verbose', action='store_true', help='')
-args = parser.parse_args()
-
 descr2acc = {}
 descr2type = {}
 def read_pathlist():
@@ -99,12 +94,12 @@ def get_acc_list_from_line(line):
     return ret
 
 
-def main():
-    read_pathlist()
+read_pathlist()
+with open('pathway.txt', 'r') as f:
     count = 0
     description = ''
     type = ''
-    for line in sys.stdin:
+    for line in f:
         line = line.rstrip()
         if len(line) == 0:
             continue
@@ -138,7 +133,3 @@ def main():
             else:
                 print('ERROR: ' + line, file=sys.stderr)
                 sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()
