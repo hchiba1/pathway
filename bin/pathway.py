@@ -46,7 +46,6 @@ def get_type_from_dict(description):
         return ret
     else:
         return 'NULL'
-    # return descr2type.get(description, 'NULL')
 
 
 def get_acc_from_dict(description):
@@ -134,7 +133,6 @@ def main():
             ma = re.match(r'^(\S.*)\.$', line)
             if ma:
                 description = ma.groups()[0]
-                # description = description.lower()
                 acc_list = get_acc_list_from_line(description)
                 type = get_type_list_from_line(description)
             else:
