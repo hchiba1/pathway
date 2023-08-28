@@ -59,19 +59,15 @@ def get_acc_from_dict(description):
 def get_type_list_from_line(line):
     line = line.lower()
     m = re.match(r'^(.+) \[regulation\]$', line)
-    reg = ''
     if m:
         line = m.groups()[0]
-        reg = 'R'
     arr = line.split('; ')
-    acc_list = []
+    list = []
     for i in arr:
-        acc = get_type_from_dict(i)
-        if acc != '':
-            acc_list.append(acc)
-    ret = ";".join(acc_list)
-    if reg != '':
-        ret += ';' + reg
+        type = get_type_from_dict(i)
+        if type != '':
+            list.append(type)
+    ret = ";".join(list)
     return ret
 
 
@@ -83,12 +79,12 @@ def get_acc_list_from_line(line):
         line = m.groups()[0]
         reg = 'R'
     arr = line.split('; ')
-    acc_list = []
+    list = []
     for i in arr:
         acc = get_acc_from_dict(i)
         if acc != '':
-            acc_list.append(acc)
-    ret = ";".join(acc_list)
+            list.append(acc)
+    ret = ";".join(list)
     if reg != '':
         ret += ';' + reg
     return ret
