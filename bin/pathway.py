@@ -40,7 +40,12 @@ def read_patylist():
 
 def get_acc_from_dict(dict, description):
     if dict.get(description) != None:
-        return dict.get(description)
+        ret = dict.get(description)
+        m = re.match(r'^(.+): step \d+/\d+$', description)
+        if m:
+            core_descr = m.groups()[0]
+            ret = get_acc_from_dict(dict, core_descr) + ';' + ret
+        return ret
     else:
         print(description, file=sys.stderr)
         return 'NULL'
