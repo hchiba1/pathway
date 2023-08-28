@@ -23,12 +23,10 @@ def read_pathlist():
                     sys.exit(1)                    
             m = re.match(r'^AC\s+(.*)$', line)
             if m:
-                acc = m.groups()[0]
-                descr2acc[descr] = acc
+                descr2acc[descr] = m.groups()[0]
             m = re.match(r'^CL\s+(.*)\.$', line)
             if m:
-                type = m.groups()[0]
-                descr2type[descr] = type
+                descr2type[descr] = m.groups()[0]
 
 
 def get_type_from_dict(description):
