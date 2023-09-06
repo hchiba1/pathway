@@ -1,12 +1,15 @@
 #!/usr/bin/env spang2
-# @endpoint portal.sib
+# @endpoint https://rdfportal.org/sib/sparql
 # @option -a
-# @param id=Q8GAH9
 
-SELECT ?uniprot ?mnemonic ?o
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?uniprot ?mnemonic ?pathway
 WHERE {
-  ?uniprot up:annotation ?annot .
-  ?uniprot up:mnemonic ?mnemonic .
-  ?annot a up:Pathway_Annotation ;
-         rdfs:seeAlso ?o .
+  ?uniprot up:mnemonic ?mnemonic ;
+      up:annotation [
+          a up:Pathway_Annotation ;
+          rdfs:seeAlso ?pathway
+      ] .
 }
