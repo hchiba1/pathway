@@ -1,0 +1,9 @@
+#!/usr/bin/env spang2
+# @endpoint portal.sib
+# @option -a
+
+SELECT ?pathway ?label
+WHERE {
+  ?pathway rdfs:label ?label .
+  VALUES (?pathway) { ${INPUT} }
+}
