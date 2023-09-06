@@ -1,0 +1,12 @@
+#!/usr/bin/env spang2
+# @endpoint portal.sib
+# @option -a
+# @param id=Q8GAH9
+
+SELECT ?uniprot ?mnemonic ?o
+WHERE {
+  ?uniprot up:annotation ?annot .
+  ?uniprot up:mnemonic ?mnemonic .
+  ?annot a up:Pathway_Annotation ;
+         rdfs:seeAlso ?o .
+}
