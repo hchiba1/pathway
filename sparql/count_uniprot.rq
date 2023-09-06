@@ -1,0 +1,12 @@
+#!/usr/bin/env spang2
+# @endpoint https://rdfportal.org/sib/sparql
+
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT (COUNT(DISTINCT ?uniprot) as ?count)
+WHERE {
+  ?uniprot up:annotation [
+      a up:Pathway_Annotation ;
+      rdfs:seeAlso ?pathway
+  ] .
+}
