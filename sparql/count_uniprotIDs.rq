@@ -5,8 +5,10 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT (COUNT(DISTINCT ?uniprot) as ?count)
 WHERE {
-  ?uniprot up:annotation [
-      a up:Pathway_Annotation ;
-      rdfs:seeAlso ?pathway
-  ] .
+  ?uniprot a up:Protein ;
+    up:reviewed true ;
+    up:annotation [
+        a up:Pathway_Annotation ;
+        rdfs:seeAlso ?pathway
+    ] .
 }
