@@ -2,5 +2,5 @@
 
 ```
 $ cd ftp/
-$ ./bin/pathway.py > ../tsv/pathway.tsv 2> pathway.err
+$ ./bin/pathway.py > ../tsv/pathway.tsv 2> ../tsv/pathway.err
 ```
