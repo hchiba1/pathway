@@ -1,3 +1,37 @@
+$(function () { // When DOM is ready
+  let candidates = [];
+  $.get('./tsv/pathway.sorted', (res) => {
+    candidates = res.trim().split('\n')
+  });
+  $('#tags').focus();
+  $('#tags').autocomplete({
+    source: (request, response) => {
+      response(
+        $.grep(candidates, (value) => {
+          let regexp = new RegExp('\\b' + escapeRegExp(request.term), 'i');
+          return value.match(regexp);
+        })
+      );
+    },
+    autoFocus: true,
+    delay: 100,
+    minLength: 2,
+    select: (e, ui) => {
+      if (ui.item) {
+        let name = ui.item.label;
+        name = name.replace(/ \(.+\)$/, '');
+        fetchDatabySPARQL(name).then(data => {
+          renderTable(data);
+        });
+      }
+    }
+  });
+});
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 function renderTable(data) {
   const table = document.getElementById('resultsTable');
 
