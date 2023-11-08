@@ -16,7 +16,15 @@ function renderTable(data) {
     const tr = document.createElement('tr');
     data.head.vars.forEach(variable => {
       const td = document.createElement('td');
-      td.textContent = binding[variable].value;
+      const value = binding[variable].value;
+      if (value.match(/^http/)) {
+        let link = document.createElement('a');
+        link.href = value;
+        link.textContent = value.replace(/.*\//, '');
+        td.appendChild(link);
+      } else {
+        td.textContent = value;
+      }
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
