@@ -21,14 +21,22 @@ WHERE {
 ORDER BY ?cientificName ?mnemonic
 `;
 
-  const response = await fetch(endpointUrl, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/sparql-results+json',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `query=${encodeURIComponent(sparqlQuery)}`
-  });
+  try {
+    const response = await fetch(endpointUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/sparql-results+json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `query=${encodeURIComponent(sparqlQuery)}`
+    });
+    if (!response.ok) {
+      // response.ok === true if the status code is 2xx
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-  return await response.json();
+    return await response.json();
+  } catch (error) {
+    console.error(`Could not fetch data: ${error}`);
+  }
 }
