@@ -1,31 +1,36 @@
 $(function () { // When DOM is ready
-  let candidates = [];
   $.get('./tsv/pathway.sorted', (res) => {
-    candidates = res.trim().split('\n')
+    setupAutocomplete(res.trim().split('\n'));
   });
   $('#tags').focus();
-  $('#tags').autocomplete({
-    source: (request, response) => {
-      response(
-        $.grep(candidates, (value) => {
-          let regexp = new RegExp('\\b' + escapeRegExp(request.term), 'i');
-          return value.match(regexp);
-        })
-      );
-    },
-    autoFocus: true,
-    delay: 100,
-    minLength: 2,
-    select: (e, ui) => {
-      if (ui.item) {
-        let name = ui.item.label;
-        name = name.replace(/ \(.+\)$/, '');
-        fetchDatabySPARQL(name).then(data => {
-          renderTable(data);
-        });
+
+  function setupAutocomplete(candidates) {
+    $('#tags').autocomplete({
+      source: (request, response) => {
+        response(
+          $.grep(candidates, (value) => {
+            let regexp = new RegExp('\\b' + escapeRegExp(request.term), 'i');
+            return value.match(regexp);
+          })
+        );
+      },
+      autoFocus: true,
+      delay: 100,
+      minLength: 2,
+      select: (e, ui) => {
+        if (ui.item) {
+          document.getElementById('resultsTable').innerHTML = 'Searching ...';
+          let name = ui.item.label;
+          fetchDatabySPARQL(name).then(data => {
+            renderTable(data);
+          }).catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('resultsTable').innerHTML = 'Error fetching data.';
+          });
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 function escapeRegExp(string) {
@@ -34,6 +39,7 @@ function escapeRegExp(string) {
 
 function renderTable(data) {
   const table = document.getElementById('resultsTable');
+  table.innerHTML = '';
 
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
