@@ -4,7 +4,7 @@ async function fetchDatabySPARQL(name) {
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT DISTINCT ?uniprot ?mnemonic ?protein_label ?taxid ?organism_name
+SELECT DISTINCT ?taxid ?organism_name ?uniprot ?mnemonic ?protein_label
 WHERE {
   ?pathway a up:Pathway ;
            rdfs:label "${name}" .
@@ -18,7 +18,7 @@ WHERE {
            ] .
   ?taxid up:scientificName ?organism_name .
 }
-ORDER BY ?cientificName ?mnemonic
+ORDER BY ?organism_name ?mnemonic
 `;
 
   try {
