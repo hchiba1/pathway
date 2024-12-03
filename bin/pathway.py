@@ -4,6 +4,7 @@ import sys
 
 descr2acc = {}
 descr2type = {}
+descr_not_found = set()
 
 with open('pathlist.txt', 'r') as f:
     descr = ''
@@ -41,7 +42,7 @@ def get_acc(descr):
             acc = get_acc(m.group(1)) + ';' + acc
         return acc
     else:
-        print(f'AC_NULL\t{descr}', file=sys.stderr)
+        descr_not_found.add(descr)
         return 'NULL'
 
 
@@ -108,3 +109,7 @@ with open('pathway.txt', 'r') as f:
         else:
             print('ERROR: ' + line, file=sys.stderr)
             sys.exit(1)
+
+
+for descr in sorted(descr_not_found):
+    print(descr, file=sys.stderr)
