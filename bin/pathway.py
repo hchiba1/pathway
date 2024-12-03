@@ -16,9 +16,9 @@ with open('pathlist.txt', 'r') as f:
             else:
                 print('ERROR: description does not end with period: ' + descr, file=sys.stderr)
                 sys.exit(1)                    
-        if m := re.match(r'^AC\s+(.*)$', line):
+        elif m := re.match(r'^AC\s+(.*)$', line):
             descr2acc[descr] = m.group(1)
-        if m := re.match(r'^CL\s+(.*)\.$', line):
+        elif m := re.match(r'^CL\s+(.*)\.$', line):
             descr2type[descr] = m.group(1)
 
 
