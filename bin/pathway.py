@@ -23,9 +23,10 @@ with open('pathlist.txt', 'r') as f:
 
 
 def get_type(descr):
-    if descr2type.get(descr) != None:
-        ret = descr2type.get(descr)
-        if m := re.match(r'^(.+): step \d+/\d+$', descr):
+    descr_lower = descr.lower()
+    if descr2type.get(descr_lower) != None:
+        ret = descr2type.get(descr_lower)
+        if m := re.match(r'^(.+): step \d+/\d+$', descr_lower):
             ret = get_type(m.group(1)) + ';' + ret
         return ret
     else:
@@ -33,9 +34,10 @@ def get_type(descr):
 
 
 def get_acc(descr):
-    if descr2acc.get(descr) != None:
-        acc = descr2acc.get(descr)
-        if m := re.match(r'^(.+): step \d+/\d+$', descr):
+    descr_lower = descr.lower()
+    if descr2acc.get(descr_lower) != None:
+        acc = descr2acc.get(descr_lower)
+        if m := re.match(r'^(.+): step \d+/\d+$', descr_lower):
             acc = get_acc(m.group(1)) + ';' + acc
         return acc
     else:
@@ -44,7 +46,6 @@ def get_acc(descr):
 
 
 def get_type_list(description):
-    description = description.lower()
     if m := re.match(r'^(.+) \[regulation\]$', description):
         description = m.group(1)
     list = []
@@ -57,7 +58,6 @@ def get_type_list(description):
 
 
 def get_acc_list(description):
-    description = description.lower()
     reg = ''
     if m := re.match(r'^(.+) \[regulation\]$', description):
         description = m.group(1)
@@ -100,10 +100,11 @@ with open('pathway.txt', 'r') as f:
                 else:
                     print('ERROR: ' + item, file=sys.stderr)
                     sys.exit(1)
-        elif matched := re.match(r'^(\S.*)\.$', line):
-            description = matched.group(1)
-            acc_list = get_acc_list(description)
-            pathway_type = get_type_list(description)
+        elif matched := re.match(r'^([A-Za-z])(\S.*)\.$', line):
+            description = matched.group(1) + matched.group(2)
+            description_uncap = matched.group(1).lower() + matched.group(2)
+            acc_list = get_acc_list(description_uncap)
+            pathway_type = get_type_list(description_uncap)
         else:
             print('ERROR: ' + line, file=sys.stderr)
             sys.exit(1)
